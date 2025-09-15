@@ -13,7 +13,7 @@ import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
 
-// Example job data (replace with API data as needed)
+// Example job data (replace with API data as needed): To be fetched from backend
 const JOBS = [
   {
     id: 1,
