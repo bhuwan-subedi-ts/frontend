@@ -5,6 +5,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import DashBoard from "./pages/admin/DashBoard";
+import JobList from "./pages/admin/JobList";
+import JobForm from "./pages/admin/JobForm";
+import ApplicationList from "./pages/admin/ApplicationList";
 
 function App() {
   return (
@@ -14,6 +18,14 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/admin/dashboard" element={<DashBoard />} />
+          <Route path="/admin/jobs" element={<JobList />} />
+          <Route path="/admin/jobs/new" element={<JobForm />} />
+          <Route path="/admin/jobs/edit/:jobId" element={<JobForm />} />
+          <Route
+            path="/admin/jobs/:jobId/applications"
+            element={<ApplicationList />}
+          />
         </Routes>
       </div>
     </Router>

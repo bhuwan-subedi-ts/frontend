@@ -48,8 +48,8 @@ const JOBS = [
     posted: "Today",
   },
 ];
-
-export default function LandingPage() {
+export default function LandingPage(props) {
+  console.log("LandingPage props:", props.name);
   const [search, setSearch] = useState("");
   const filteredJobs = JOBS.filter(
     (job) =>
@@ -57,6 +57,8 @@ export default function LandingPage() {
       job.company.toLowerCase().includes(search.toLowerCase()) ||
       job.location.toLowerCase().includes(search.toLowerCase())
   );
+
+
 
   return (
     <div
