@@ -16,7 +16,7 @@ import { useAuthStore } from "../store";
 const USER_TYPES = [
   { text: "Select user type", value: "select" },
   { text: "Admin", value: "admin" },
-  { text: "Job Seeker", value: "job_seeker" },
+  { text: "Job Seeker", value: "jobseeker" },
 ];
 
 export default function RegisterPage() {
@@ -37,6 +37,7 @@ export default function RegisterPage() {
   };
 
   const handleSubmit = async (e) => {
+    debugger;
     e.preventDefault();
     if (
       !form.fullname ||

@@ -15,8 +15,12 @@ export default function JobForm() {
   const [form, setForm] = useState({
     title: "",
     description: "",
+    company: "",
     location: "",
+    salary_range: "",
   });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { jobId } = useParams();
 
@@ -30,15 +34,39 @@ export default function JobForm() {
     }
   }, [jobId]);
 
-  const handleChange = (field, value) => setForm({ ...form, [field]: value });
+  const handleChange = (field, value) => {
+    setForm({ ...form, [field]: value });
+    setError("");
+    setSuccess("");
+  };
 
   const handleSubmit = async (e) => {
+    debugger;
     e.preventDefault();
+    // Basic validation
+    if (
+      !form.title ||
+      !form.description ||
+      !form.company ||
+      !form.location ||
+      !form.salary_range
+    ) {
+      setError("All fields are required.");
+      return;
+    }
     if (jobId) {
       await updateJob(jobId, form);
     } else {
       await createJob(form);
     }
+    setSuccess("Job saved successfully!");
+    setForm({
+      title: "",
+      description: "",
+      company: "",
+      location: "",
+      salary_range: "",
+    });
     navigate("/admin/jobs");
   };
 
@@ -109,7 +137,26 @@ export default function JobForm() {
                 style={{ width: "100%", minHeight: 100 }}
               />
             </div>
-            <div style={{ marginBottom: 24 }}>
+            <div style={{ marginBottom: 16 }}>
+              <label
+                htmlFor="company"
+                style={{
+                  fontWeight: 500,
+                  marginBottom: 4,
+                  display: "block",
+                }}
+              >
+                Company
+              </label>
+              <Input
+                id="company"
+                value={form.company}
+                onChange={(e) => handleChange("company", e.target.value)}
+                required
+                style={{ width: "100%" }}
+              />
+            </div>
+            <div style={{ marginBottom: 16 }}>
               <label
                 htmlFor="location"
                 style={{
@@ -128,6 +175,34 @@ export default function JobForm() {
                 style={{ width: "100%" }}
               />
             </div>
+            <div style={{ marginBottom: 16 }}>
+              <label
+                htmlFor="salary_range"
+                style={{
+                  fontWeight: 500,
+                  marginBottom: 4,
+                  display: "block",
+                }}
+              >
+                Salary Range
+              </label>
+              <Input
+                id="salary_range"
+                value={form.salary_range}
+                onChange={(e) => handleChange("salary_range", e.target.value)}
+                required
+                style={{ width: "100%" }}
+              />
+            </div>
+
+            {error && (
+              <div style={{ color: "#d32f2f", marginBottom: 12 }}>{error}</div>
+            )}
+            {success && (
+              <div style={{ color: "#388e3c", marginBottom: 12 }}>
+                {success}
+              </div>
+            )}
             <Button
               type="submit"
               themeColor="primary"

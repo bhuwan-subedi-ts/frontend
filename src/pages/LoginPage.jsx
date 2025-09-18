@@ -35,7 +35,7 @@ export default function LoginPage() {
     const data = await loginUser(form.email, form.password);
     if (data.message === "Login successful") {
       setUser(data.user, data.token); // store user and token
-      navigate("/dashboard");
+      navigate("/");
     } else {
       setError(data.message || "Login failed.");
     }

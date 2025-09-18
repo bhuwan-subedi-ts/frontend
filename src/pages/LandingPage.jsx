@@ -12,8 +12,9 @@ import { Input } from "@progress/kendo-react-inputs";
 import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { Link } from "react-router-dom";
 import "./LandingPage.css";
+import JobCardList from "../components/JobCardList";
+import { useAuthStore } from "../store"; // <-- Import Zustand store
 
-// Example job data (replace with API data as needed): To be fetched from backend
 const JOBS = [
   {
     id: 1,
@@ -48,8 +49,8 @@ const JOBS = [
     posted: "Today",
   },
 ];
+
 export default function LandingPage(props) {
-  console.log("LandingPage props:", props.name);
   const [search, setSearch] = useState("");
   const filteredJobs = JOBS.filter(
     (job) =>
@@ -58,7 +59,7 @@ export default function LandingPage(props) {
       job.location.toLowerCase().includes(search.toLowerCase())
   );
 
-
+  const user = useAuthStore((state) => state.user); // <-- Get user from Zustand
 
   return (
     <div
@@ -88,19 +89,37 @@ export default function LandingPage(props) {
               }}
             />
             <div>
-              <CardTitle style={{ fontSize: 28, fontWeight: 700, color: "#1976d2" }}>
+              <CardTitle
+                style={{ fontSize: 28, fontWeight: 700, color: "#1976d2" }}
+              >
                 Elevated Work Force
               </CardTitle>
               <CardSubtitle style={{ color: "#607d8b", fontSize: 16 }}>
                 Empowering Careers. Connecting Talent.
               </CardSubtitle>
+              {user && (
+                <div
+                  style={{
+                    marginTop: 8,
+                    color: "#388e3c",
+                    fontWeight: 500,
+                  }}
+                >
+                  Welcome, {user.fullname || user.email}!
+                </div>
+              )}
             </div>
           </div>
         </CardHeader>
         <CardBody>
-          <div className="k-d-flex k-justify-content-between k-align-items-center" style={{ marginBottom: 24 }}>
+          <div
+            className="k-d-flex k-justify-content-between k-align-items-center"
+            style={{ marginBottom: 24 }}
+          >
             <div>
-              <p style={{ fontSize: 18, color: "#374151", margin: "0 0 8px 0" }}>
+              <p
+                style={{ fontSize: 18, color: "#374151", margin: "0 0 8px 0" }}
+              >
                 Find your next opportunity or the perfect candidate.
               </p>
               <div
@@ -114,17 +133,26 @@ export default function LandingPage(props) {
                   color: "#455a64",
                 }}
               >
-                <b>Features:</b> Job search, smart matching, analytics, secure profiles, and more.
+                <b>Features:</b> Job search, smart matching, analytics, secure
+                profiles, and more.
               </div>
             </div>
             <div style={{ display: "flex", gap: 12 }}>
               <Link to="/login">
-                <Button themeColor="primary" size="medium" style={{ minWidth: 100 }}>
+                <Button
+                  themeColor="primary"
+                  size="medium"
+                  style={{ minWidth: 100 }}
+                >
                   Login
                 </Button>
               </Link>
               <Link to="/register">
-                <Button themeColor="secondary" size="medium" style={{ minWidth: 100 }}>
+                <Button
+                  themeColor="secondary"
+                  size="medium"
+                  style={{ minWidth: 100 }}
+                >
                   Register
                 </Button>
               </Link>
@@ -134,7 +162,7 @@ export default function LandingPage(props) {
             <Input
               placeholder="Search jobs by title, company, or location..."
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               style={{ width: "100%", maxWidth: 400 }}
               prefixIcon="search"
             />
@@ -153,7 +181,7 @@ export default function LandingPage(props) {
               <GridColumn
                 title="Action"
                 width="120px"
-                cell={props => (
+                cell={(props) => (
                   <td>
                     <Button
                       themeColor="primary"
@@ -168,11 +196,14 @@ export default function LandingPage(props) {
               />
             </Grid>
             {filteredJobs.length === 0 && (
-              <div style={{ textAlign: "center", color: "#90a4ae", marginTop: 24 }}>
+              <div
+                style={{ textAlign: "center", color: "#90a4ae", marginTop: 24 }}
+              >
                 No jobs found matching your search.
               </div>
             )}
           </div>
+          <JobCardList showApply={true} />
         </CardBody>
         <CardActions
           style={{
@@ -183,7 +214,8 @@ export default function LandingPage(props) {
           }}
         >
           <span style={{ color: "#90a4ae", fontSize: 14 }}>
-            &copy; {new Date().getFullYear()} Elevated Work Force. All rights reserved.
+            &copy; {new Date().getFullYear()} Elevated Work Force. All rights
+            reserved.
           </span>
         </CardActions>
       </Card>

@@ -9,6 +9,7 @@ export default function JobList() {
   useEffect(() => {
     async function fetchJobs() {
       const data = await getJobs();
+      console.log("job list==>", data);
       setJobs(data.jobs || []);
     }
     fetchJobs();

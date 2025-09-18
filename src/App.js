@@ -9,6 +9,7 @@ import DashBoard from "./pages/admin/DashBoard";
 import JobList from "./pages/admin/JobList";
 import JobForm from "./pages/admin/JobForm";
 import ApplicationList from "./pages/admin/ApplicationList";
+import JobApplicationForm from "./pages/jobseeker/JobApplicationForm";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             path="/admin/jobs/:jobId/applications"
             element={<ApplicationList />}
           />
+          <Route path="/jobs/:jobId/apply" element={<JobApplicationForm />} />
         </Routes>
       </div>
     </Router>
